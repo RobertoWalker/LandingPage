@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Landing Page Portfólio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --accent: #6366f1;
+      --bg: #f9fafb;
+      --text: #111827;
+      --light-text: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 30px 40px;
+      text-align: center;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 80px 40px;
+      background: linear-gradient(to right, #6366f1, #4f46e5);
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero-content h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: white;
+      color: var(--primary);
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #e0e7ff;
+    }
+
+    .hero img {
+      width: 450px;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 60px 40px;
+      background: #fff;
+    }
+
+    .feature {
+      background: var(--bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .feature h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: var(--light-text);
+    }
+
+    footer {
+      background: white;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.9rem;
+      color: var(--light-text);
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-content {
+        margin-bottom: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Melo Developer</h1>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Crie uma presença digital de impacto</h2>
+      <p>Transforme visitantes em clientes com uma landing page profissional, responsiva e feita para converter. Simples, direta e visualmente marcante.</p>
+  <a href="contato.html" class="btn">Solicitar Orçamento</a>
+    </div>
+      <img src="image/hero.svg" alt="Exemplo de Landing Page" loading="lazy"
+           onerror="this.onerror=null;this.src='https://via.placeholder.com/900x600.png?text=Sem+imagem'" />
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <h3>Responsiva</h3>
+      <p>Funciona perfeitamente em celulares, tablets e computadores.</p>
+    </div>
+    <div class="feature">
+      <h3>Foco em Conversão</h3>
+      <p>Layout estratégico que direciona o usuário para a ação desejada.</p>
+    </div>
+    <div class="feature">
+      <h3>Design Personalizado</h3>
+      <p>Estilo único, alinhado com a identidade visual da sua marca.</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Roberto. Todos os direitos reservados.
+  </footer>
+
+</body>
+</html>

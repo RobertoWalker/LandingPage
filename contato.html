@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contato — Solicitar Orçamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary: #4f46e5;
+      --bg: #f9fafb;
+      --text: #111827;
+      --card: #ffffff;
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
+    header{padding:24px 32px;background:white;box-shadow:0 2px 6px rgba(0,0,0,0.04);text-align:center}
+    header h1{color:var(--primary);font-size:1.6rem}
+    .container{max-width:900px;margin:40px auto;padding:24px}
+    .card{background:var(--card);padding:28px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+    form{display:grid;gap:12px}
+    label{font-size:0.9rem;color:#374151}
+    input[type=text], input[type=email], textarea{width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:8px;font-size:1rem}
+    textarea{min-height:140px;resize:vertical}
+    .row{display:flex;gap:12px}
+    .row .col{flex:1}
+    .btn{display:inline-block;padding:12px 20px;background:var(--primary);color:white;border-radius:8px;text-decoration:none;border:none;font-weight:600;cursor:pointer}
+    .btn.secondary{background:#eef2ff;color:var(--primary);border:1px solid rgba(79,70,229,0.08)}
+    .actions{display:flex;gap:12px;align-items:center;margin-top:6px}
+    .success{background:#ecfdf5;color:#065f46;padding:10px;border-radius:8px;margin-top:12px;border:1px solid #bbf7d0}
+    footer{margin-top:28px;text-align:center;color:#6b7280;font-size:0.9rem}
+    @media(max-width:640px){.row{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Solicitar Orçamento</h1>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <p>Preencha o formulário abaixo e entraremos em contato com você em até 1 dia útil. (Esse formulário funciona no cliente — sem servidor nesta amostra.)</p>
+
+   <!-- Para enviar mensagens de verdade, crie um endpoint em um serviço como Formspree
+     e substitua a constante FORM_ENDPOINT abaixo pelo seu endpoint (ex: https://formspree.io/f/abcd1234).
+     Como alternativa, mantenha a versão de demonstração (sem envio) já presente neste arquivo.) -->
+   <form id="contactForm">
+        <div class="row">
+          <div class="col">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required placeholder="Seu nome" />
+          </div>
+          <div class="col">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="seu@exemplo.com" />
+          </div>
+        </div>
+
+        <label for="assunto">Assunto</label>
+        <input type="text" id="assunto" name="assunto" placeholder="Breve descrição do pedido" />
+
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" placeholder="Conte-nos sobre seu projeto..."></textarea>
+
+        <div class="actions">
+          <button type="submit" class="btn">Enviar solicitação</button>
+          <a href="index.html" class="btn secondary">Voltar</a>
+        </div>
+
+        <div id="feedback" aria-live="polite"></div>
+      </form>
+
+      <footer>
+        <p>Ou envie um email diretamente para <a href="mailto:betopmello2015@gmail.com">betopmello2015@gmail.com</a></p>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Integração do formulário com um endpoint externo (ex: Formspree).
+  // Substitua a string abaixo pelo endpoint do seu backend local ou remoto.
+  // Exemplo local: http://localhost:3000/api/contact
+  const FORM_ENDPOINT = 'http://localhost:3000/api/contact'; // <- use seu endpoint
+
+    const form = document.getElementById('contactForm');
+    const feedback = document.getElementById('feedback');
+
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      feedback.innerHTML = '';
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if(!nome || !email){
+        feedback.innerHTML = '<div class="success" style="background:#fff3cd;color:#92400e;border:1px solid #ffe8a1">Por favor preencha nome e email.</div>';
+        return;
+      }
+
+      // Monta dados do formulário
+      const formData = new FormData(form);
+
+      // Indica envio em progresso
+      feedback.innerHTML = '<div class="success">Enviando...</div>';
+
+      try {
+        // Se você não tiver um endpoint, o envio falhará: substitua FORM_ENDPOINT antes de usar.
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (res.ok) {
+          feedback.innerHTML = '<div class="success">Mensagem enviada com sucesso! Verifique seu email.</div>';
+          form.reset();
+        } else {
+          // tenta extrair mensagem de erro do serviço
+          let errText = 'Erro ao enviar. Por favor tente novamente.';
+          try { const json = await res.json(); if (json && json.error) errText = json.error; } catch(_){}
+          feedback.innerHTML = `<div class="success" style="background:#fee2e2;color:#b91c1c;border:1px solid #fecaca">${errText}</div>`;
+        }
+      } catch (err) {
+        feedback.innerHTML = '<div class="success" style="background:#fee2e2;color:#b91c1c;border:1px solid #fecaca">Erro de rede ao enviar. Verifique sua conexão e tente novamente.</div>';
+      }
+    });
+  </script>
+</body>
+</html>
